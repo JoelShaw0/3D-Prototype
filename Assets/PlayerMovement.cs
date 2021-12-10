@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
-
+    public int jumpLimit = 1;
     Vector3 velocity;
     bool isGrounded;
     // Start is called before the first frame update
@@ -29,10 +30,15 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        
-        if(isGrounded && velocity.y < 0)
+
+        Debug.Log(groundCheck.position);
+        Debug.Log(isGrounded);
+
+        if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+            jumpLimit = 1;
+            Debug.Log(isGrounded);
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -42,9 +48,10 @@ public class PlayerMovement : MonoBehaviour
 
         characterController.Move(move * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && jumpLimit > 0)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            jumpLimit = 0;
         }
 
         velocity.y += gravity * Time.deltaTime;
