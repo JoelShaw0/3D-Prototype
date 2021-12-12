@@ -10,8 +10,11 @@ public class BasicAI : MonoBehaviour
     public int numEnemies;
     public Camera cam;
     public NavMeshAgent agent;
-    public GameObject run;
-    public GameObject stay;
+    public GameObject run1;
+    public GameObject run2;
+    public GameObject run3;
+    public GameObject run4;
+    public GameObject defaultPosition;
     public GameObject ground;
     void Start()
     {
@@ -23,25 +26,53 @@ public class BasicAI : MonoBehaviour
     {
         //if (Input.GetMouseButtonDown(0))
         //{
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        int num = Random.Range(0, 4);
+            
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            
+        RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit) && hit.collider != ground)
+        if (Physics.Raycast(ray, out hit) && hit.collider != ground)
+        {
+            Debug.DrawRay(transform.position, transform.forward, Color.green); 
+            print("Hit");
+            agent.speed = 40;
+            if (num == 1)
             {
-            agent.speed = 5;
-            agent.SetDestination(run.transform.position);
+                Debug.Log(num);
+                agent.SetDestination(run1.transform.position);
+            }
+            else if (num == 2)
+            {
+                Debug.Log(num);
+                agent.SetDestination(run2.transform.position);
+            }
+            else if (num == 3)
+            {
+                Debug.Log(num);
+                agent.SetDestination(run3.transform.position);
+            }
+            else if (num == 4)
+            {
+                Debug.Log(num);
+                agent.SetDestination(run4.transform.position);
             }
             else
             {
-            agent.speed = 5;
-            agent.SetDestination(stay.transform.position);
-            Debug.Log(stay.transform.position);
+                ;
             }
+        }
+        else
+        {
+            agent.speed = 40;
+            agent.SetDestination(defaultPosition.transform.position);
+            Debug.Log(defaultPosition.transform.position);
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
-            agent.speed = 30;
-            agent.SetDestination(agent.transform.position + new Vector3(0.0f, 0.0f, 5.0f));
+            agent.speed = 1000;
+            agent.SetDestination(agent.transform.position + new Vector3(20.0f, 20.0f, 20.0f));
         }
         //}
     }

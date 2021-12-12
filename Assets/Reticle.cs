@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Reticle : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Update is called once per frame
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Cursor.visible = true;
+        //Cursor.visible = (false);
     }
 }
